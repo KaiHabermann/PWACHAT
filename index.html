@@ -1,13 +1,86 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PWAGENT</title>
-    <script type="module" crossorigin src="./assets/index-D6t-Z8ke.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CmO2DcCQ.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PWAGENT chat (test)</title>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: #10141f;
+    color: #e8ecf4;
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+  }
+  p.hint {
+    color: #8a93a8;
+    font-size: 0.85rem;
+    max-width: 440px;
+    text-align: center;
+    margin: 0;
+  }
+  button.opt {
+    background: #1f2739;
+    border: 1px solid #2a3450;
+    color: #e8ecf4;
+    border-radius: 7px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  button.opt:hover { border-color: #58c1e8; }
+  pre {
+    max-width: min(640px, 90vw);
+    max-height: 50vh;
+    overflow: auto;
+    background: #171d2c;
+    border: 1px solid #2a3450;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="hint">
+    PWAGENT chat &mdash; this page is a thin wrapper around the widget served
+    from the CDN (<code>pwagent-chat.js</code>), not a separate bundled
+    build. Describe a decay; the generated DecaySelector JSON prints below
+    when the flow completes.
+  </p>
+  <button class="opt" id="open-btn">Open chat</button>
+  <pre id="output" hidden></pre>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/KaiHabermann/PWACHAT@pages/pwagent-chat.js"></script>
+<script>
+  var out = document.getElementById("output");
+  var openBtn = document.getElementById("open-btn");
+
+  function openChat() {
+    PWAgentChat.open({
+      onComplete: function (decaySelectorJson) {
+        out.hidden = false;
+        out.textContent = decaySelectorJson;
+      },
+    });
+  }
+
+  openBtn.addEventListener("click", openChat);
+  openChat();
+</script>
+</body>
 </html>
